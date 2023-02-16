@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0pfee04" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.5.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:message id="Message_3mrblg9" name="Hellow" />
+  <bpmn:message id="Message_082q83c" name="Message_082q83c" />
+  <bpmn:message id="Message_1hdrt3f" name="Message_1hdrt3f" />
+  <bpmn:collaboration id="Collaboration_0kdzons">
+    <bpmn:participant id="Participant_1k9vzfy" processRef="MainTestParallel" />
+  </bpmn:collaboration>
+  <bpmn:process id="MainTestParallel" isExecutable="true">
+    <bpmn:userTask id="TEST_TASK" camunda:assignee="${name}">
+      <bpmn:extensionElements>
+        <camunda:taskListener class="com.example.workflow.listeners.TestSup" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16xkoly</bpmn:incoming>
+      <bpmn:outgoing>Flow_00zjfkj</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_00zjfkj" sourceRef="TEST_TASK" targetRef="Event_0egr164" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_16xkoly</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_16xkoly" sourceRef="StartEvent_1" targetRef="TEST_TASK" />
+    <bpmn:endEvent id="Event_0egr164">
+      <bpmn:incoming>Flow_00zjfkj</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1mqhbw9" messageRef="Message_3mrblg9" camunda:expression="${delegateExecution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;message_bar&#34;).setVariables(delegateExecution.getVariables()).correlateWithResult()}" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0kdzons">
+      <bpmndi:BPMNShape id="Participant_1k9vzfy_di" bpmnElement="Participant_1k9vzfy" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="900" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="149" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14fdju4_di" bpmnElement="TEST_TASK">
+        <dc:Bounds x="490" y="127" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tkht8e_di" bpmnElement="Event_0egr164">
+        <dc:Bounds x="892" y="149" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_16xkoly_di" bpmnElement="Flow_16xkoly">
+        <di:waypoint x="215" y="167" />
+        <di:waypoint x="490" y="167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00zjfkj_di" bpmnElement="Flow_00zjfkj">
+        <di:waypoint x="590" y="167" />
+        <di:waypoint x="892" y="167" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
