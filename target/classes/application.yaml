@@ -1,4 +1,15 @@
-spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/camunda_home
+    username: postgres
+    password: 153759
+    driverClassName: org.postgresql.Driver
 
 camunda.bpm.admin-user:
   id: 123
